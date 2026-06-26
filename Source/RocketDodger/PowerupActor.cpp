@@ -26,6 +26,13 @@ APowerupActor::APowerupActor()
 		PowerupMesh->SetRelativeScale3D(FVector(0.8f, 0.8f, 0.8f));
 	}
 
+	// Explicitly assign BasicShapeMaterial to replace the default beige checkerboard WorldGridMaterial!
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> BaseMatAsset(TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
+	if (BaseMatAsset.Succeeded())
+	{
+		PowerupMesh->SetMaterial(0, BaseMatAsset.Object);
+	}
+
 	PowerupType = TEXT("shield");
 	FallSpeed = 300.0f;
 	SpinSpeed = 100.0f;
@@ -48,6 +55,9 @@ void APowerupActor::BeginPlay()
 
 			DynPowerup->SetVectorParameterValue(TEXT("Color"), MatColor);
 			DynPowerup->SetVectorParameterValue(TEXT("BaseColor"), MatColor);
+			DynPowerup->SetVectorParameterValue(TEXT("EmissiveColor"), MatColor);
+			DynPowerup->SetVectorParameterValue(TEXT("Emissive"), MatColor);
+			DynPowerup->SetVectorParameterValue(TEXT("Tint"), MatColor);
 		}
 	}
 }

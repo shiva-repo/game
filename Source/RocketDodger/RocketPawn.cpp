@@ -65,6 +65,17 @@ ARocketPawn::ARocketPawn()
 		ShieldMesh->SetRelativeScale3D(FVector(2.0f, 2.0f, 2.0f));
 	}
 
+	// Explicitly assign BasicShapeMaterial to replace the default beige checkerboard WorldGridMaterial!
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> BaseMatAsset(TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
+	if (BaseMatAsset.Succeeded())
+	{
+		RocketMesh->SetMaterial(0, BaseMatAsset.Object);
+		LeftWingMesh->SetMaterial(0, BaseMatAsset.Object);
+		RightWingMesh->SetMaterial(0, BaseMatAsset.Object);
+		PilotMesh->SetMaterial(0, BaseMatAsset.Object);
+		ShieldMesh->SetMaterial(0, BaseMatAsset.Object);
+	}
+
 	// 6. Camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(RootComponent);
@@ -93,14 +104,18 @@ void ARocketPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Initialize dynamic material instances for vibrant arcade aesthetics
+	// Initialize dynamic material instances for vibrant arcade aesthetics with full Emissive glowing colors!
 	if (RocketMesh)
 	{
 		UMaterialInstanceDynamic* DynRocket = RocketMesh->CreateAndSetMaterialInstanceDynamic(0);
 		if (DynRocket)
 		{
-			DynRocket->SetVectorParameterValue(TEXT("Color"), FLinearColor(0.8f, 0.05f, 0.05f, 1.0f));
-			DynRocket->SetVectorParameterValue(TEXT("BaseColor"), FLinearColor(0.8f, 0.05f, 0.05f, 1.0f));
+			FLinearColor Col(0.8f, 0.05f, 0.05f, 1.0f);
+			DynRocket->SetVectorParameterValue(TEXT("Color"), Col);
+			DynRocket->SetVectorParameterValue(TEXT("BaseColor"), Col);
+			DynRocket->SetVectorParameterValue(TEXT("EmissiveColor"), Col);
+			DynRocket->SetVectorParameterValue(TEXT("Emissive"), Col);
+			DynRocket->SetVectorParameterValue(TEXT("Tint"), Col);
 		}
 	}
 	if (LeftWingMesh)
@@ -108,8 +123,12 @@ void ARocketPawn::BeginPlay()
 		UMaterialInstanceDynamic* DynLeft = LeftWingMesh->CreateAndSetMaterialInstanceDynamic(0);
 		if (DynLeft)
 		{
-			DynLeft->SetVectorParameterValue(TEXT("Color"), FLinearColor(0.1f, 0.1f, 0.15f, 1.0f));
-			DynLeft->SetVectorParameterValue(TEXT("BaseColor"), FLinearColor(0.1f, 0.1f, 0.15f, 1.0f));
+			FLinearColor Col(0.1f, 0.1f, 0.15f, 1.0f);
+			DynLeft->SetVectorParameterValue(TEXT("Color"), Col);
+			DynLeft->SetVectorParameterValue(TEXT("BaseColor"), Col);
+			DynLeft->SetVectorParameterValue(TEXT("EmissiveColor"), Col);
+			DynLeft->SetVectorParameterValue(TEXT("Emissive"), Col);
+			DynLeft->SetVectorParameterValue(TEXT("Tint"), Col);
 		}
 	}
 	if (RightWingMesh)
@@ -117,8 +136,12 @@ void ARocketPawn::BeginPlay()
 		UMaterialInstanceDynamic* DynRight = RightWingMesh->CreateAndSetMaterialInstanceDynamic(0);
 		if (DynRight)
 		{
-			DynRight->SetVectorParameterValue(TEXT("Color"), FLinearColor(0.1f, 0.1f, 0.15f, 1.0f));
-			DynRight->SetVectorParameterValue(TEXT("BaseColor"), FLinearColor(0.1f, 0.1f, 0.15f, 1.0f));
+			FLinearColor Col(0.1f, 0.1f, 0.15f, 1.0f);
+			DynRight->SetVectorParameterValue(TEXT("Color"), Col);
+			DynRight->SetVectorParameterValue(TEXT("BaseColor"), Col);
+			DynRight->SetVectorParameterValue(TEXT("EmissiveColor"), Col);
+			DynRight->SetVectorParameterValue(TEXT("Emissive"), Col);
+			DynRight->SetVectorParameterValue(TEXT("Tint"), Col);
 		}
 	}
 	if (ShieldMesh)
@@ -126,8 +149,12 @@ void ARocketPawn::BeginPlay()
 		UMaterialInstanceDynamic* DynShield = ShieldMesh->CreateAndSetMaterialInstanceDynamic(0);
 		if (DynShield)
 		{
-			DynShield->SetVectorParameterValue(TEXT("Color"), FLinearColor(0.0f, 0.5f, 1.0f, 0.3f));
-			DynShield->SetVectorParameterValue(TEXT("BaseColor"), FLinearColor(0.0f, 0.5f, 1.0f, 0.3f));
+			FLinearColor Col(0.0f, 0.5f, 1.0f, 0.3f);
+			DynShield->SetVectorParameterValue(TEXT("Color"), Col);
+			DynShield->SetVectorParameterValue(TEXT("BaseColor"), Col);
+			DynShield->SetVectorParameterValue(TEXT("EmissiveColor"), Col);
+			DynShield->SetVectorParameterValue(TEXT("Emissive"), Col);
+			DynShield->SetVectorParameterValue(TEXT("Tint"), Col);
 		}
 	}
 	if (PilotMesh)
@@ -135,8 +162,12 @@ void ARocketPawn::BeginPlay()
 		UMaterialInstanceDynamic* DynPilot = PilotMesh->CreateAndSetMaterialInstanceDynamic(0);
 		if (DynPilot)
 		{
-			DynPilot->SetVectorParameterValue(TEXT("Color"), FLinearColor(0.0f, 0.8f, 1.0f, 1.0f));
-			DynPilot->SetVectorParameterValue(TEXT("BaseColor"), FLinearColor(0.0f, 0.8f, 1.0f, 1.0f));
+			FLinearColor Col(0.0f, 0.8f, 1.0f, 1.0f);
+			DynPilot->SetVectorParameterValue(TEXT("Color"), Col);
+			DynPilot->SetVectorParameterValue(TEXT("BaseColor"), Col);
+			DynPilot->SetVectorParameterValue(TEXT("EmissiveColor"), Col);
+			DynPilot->SetVectorParameterValue(TEXT("Emissive"), Col);
+			DynPilot->SetVectorParameterValue(TEXT("Tint"), Col);
 		}
 	}
 }
@@ -274,5 +305,8 @@ void ARocketPawn::ApplySkin(FString SkinName)
 
 	DynRocket->SetVectorParameterValue(TEXT("Color"), SkinColor);
 	DynRocket->SetVectorParameterValue(TEXT("BaseColor"), SkinColor);
+	DynRocket->SetVectorParameterValue(TEXT("EmissiveColor"), SkinColor);
+	DynRocket->SetVectorParameterValue(TEXT("Emissive"), SkinColor);
+	DynRocket->SetVectorParameterValue(TEXT("Tint"), SkinColor);
 }
 

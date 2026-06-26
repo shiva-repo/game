@@ -26,6 +26,13 @@ AMeteorActor::AMeteorActor()
 		MeteorMesh->SetRelativeScale3D(FVector(1.6f, 1.6f, 1.6f));
 	}
 
+	// Explicitly assign BasicShapeMaterial to replace the default beige checkerboard WorldGridMaterial!
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> BaseMatAsset(TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
+	if (BaseMatAsset.Succeeded())
+	{
+		MeteorMesh->SetMaterial(0, BaseMatAsset.Object);
+	}
+
 	ObstacleType = TEXT("normal");
 	MaxHealth = 1;
 	Health = 1;
@@ -57,6 +64,9 @@ void AMeteorActor::BeginPlay()
 
 			DynMeteor->SetVectorParameterValue(TEXT("Color"), MatColor);
 			DynMeteor->SetVectorParameterValue(TEXT("BaseColor"), MatColor);
+			DynMeteor->SetVectorParameterValue(TEXT("EmissiveColor"), MatColor);
+			DynMeteor->SetVectorParameterValue(TEXT("Emissive"), MatColor);
+			DynMeteor->SetVectorParameterValue(TEXT("Tint"), MatColor);
 		}
 	}
 

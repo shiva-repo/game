@@ -25,6 +25,13 @@ ALaserActor::ALaserActor()
 		LaserMesh->SetRelativeScale3D(FVector(0.2f, 0.2f, 1.5f));
 	}
 
+	// Explicitly assign BasicShapeMaterial to replace the default beige checkerboard WorldGridMaterial!
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> BaseMatAsset(TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
+	if (BaseMatAsset.Succeeded())
+	{
+		LaserMesh->SetMaterial(0, BaseMatAsset.Object);
+	}
+
 	LaserSpeed = 2500.0f;
 	MaxYDepth = 3500.0f;
 
@@ -44,6 +51,9 @@ void ALaserActor::BeginPlay()
 			FLinearColor LaserColor(0.0f, 1.0f, 0.2f, 1.0f); // Bright neon green/cyan
 			DynLaser->SetVectorParameterValue(TEXT("Color"), LaserColor);
 			DynLaser->SetVectorParameterValue(TEXT("BaseColor"), LaserColor);
+			DynLaser->SetVectorParameterValue(TEXT("EmissiveColor"), LaserColor);
+			DynLaser->SetVectorParameterValue(TEXT("Emissive"), LaserColor);
+			DynLaser->SetVectorParameterValue(TEXT("Tint"), LaserColor);
 		}
 	}
 }
