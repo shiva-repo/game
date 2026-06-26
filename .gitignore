@@ -1,0 +1,28 @@
+# Unreal Engine template gitignore
+# Source: https://github.com/github/gitignore/blob/main/UnrealEngine.gitignore
+
+# Repository folders
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# IDE files
+.vs/
+*.sln
+*.slnx
+*.suo
+*.opensdf
+*.sdf
+*.layout
+*.vc.db
+*.VC.db
+
+# User config files
+/Config/User*
+
+# Backup and temp files
+*.bak
+*.tmp
+*.log
