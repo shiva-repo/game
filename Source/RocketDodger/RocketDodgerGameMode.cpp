@@ -41,21 +41,21 @@ void ARocketDodgerGameMode::BeginPlay()
 		FString ClassName = It->GetClass()->GetName();
 		FString ActorName = It->GetName();
 
-		// We want to keep DirectionalLight and SkyLight so our spaceship is beautifully lit!
-		if (ClassName.Contains(TEXT("DirectionalLight")) || ClassName.Contains(TEXT("SkyLight")))
+		// We want to keep DirectionalLight so our spaceship is beautifully lit, but destroy SkyLight to eliminate the red real-time capture warning!
+		if (ClassName.Contains(TEXT("DirectionalLight")))
 		{
 			continue;
 		}
 
-		// Hide and destroy everything else related to the default daytime environment (Clouds, Fog, Atmosphere, Landscape, Floor grids, Foliage, etc.)
+		// Hide and destroy everything else related to the default daytime environment (Clouds, SkyLight, Fog, Atmosphere, Landscape, Floor grids, Foliage, etc.)
 		if (ClassName.Contains(TEXT("VolumetricCloud")) || ClassName.Contains(TEXT("SkyAtmosphere")) || 
 			ClassName.Contains(TEXT("ExponentialHeightFog")) || ClassName.Contains(TEXT("Landscape")) || 
 			ClassName.Contains(TEXT("StaticMeshActor")) || ClassName.Contains(TEXT("InstancedFoliage")) || 
-			ClassName.Contains(TEXT("WorldPartitionMiniMap")) || ActorName.Contains(TEXT("Floor")) || 
-			ActorName.Contains(TEXT("Grid")) || ActorName.Contains(TEXT("Plane")) || 
-			ActorName.Contains(TEXT("Cube")) || ActorName.Contains(TEXT("Cloud")) || 
-			ActorName.Contains(TEXT("Fog")) || ActorName.Contains(TEXT("Sky")) || 
-			ActorName.Contains(TEXT("Landscape")))
+			ClassName.Contains(TEXT("WorldPartitionMiniMap")) || ClassName.Contains(TEXT("SkyLight")) || 
+			ActorName.Contains(TEXT("Floor")) || ActorName.Contains(TEXT("Grid")) || 
+			ActorName.Contains(TEXT("Plane")) || ActorName.Contains(TEXT("Cube")) || 
+			ActorName.Contains(TEXT("Cloud")) || ActorName.Contains(TEXT("Fog")) || 
+			ActorName.Contains(TEXT("Sky")) || ActorName.Contains(TEXT("Landscape")))
 		{
 			It->SetActorHiddenInGame(true);
 			It->SetActorEnableCollision(false);

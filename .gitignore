@@ -10,8 +10,6 @@ Saved/
 
 # IDE files
 .vs/
-*.sln
-*.slnx
 *.suo
 *.opensdf
 *.sdf
@@ -20,7 +18,7 @@ Saved/
 *.VC.db
 
 # User config files
-/Config/User*
+# /Config/User*
 
 # Backup and temp files
 *.bak

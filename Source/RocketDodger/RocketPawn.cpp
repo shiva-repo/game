@@ -11,6 +11,7 @@
 ARocketPawn::ARocketPawn()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
 	// 1. Box Collision Component
 	CollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionComponent"));
@@ -27,8 +28,8 @@ ARocketPawn::ARocketPawn()
 	if (ConeMeshAsset.Succeeded())
 	{
 		RocketMesh->SetStaticMesh(ConeMeshAsset.Object);
-		RocketMesh->SetRelativeRotation(FRotator(-90.f, 90.f, 0.f)); // Orient to point forward along positive Y
-		RocketMesh->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.5f));
+		RocketMesh->SetRelativeRotation(FRotator(0.f, 0.f, -90.f)); // Orient to point forward along positive Y
+		RocketMesh->SetRelativeScale3D(FVector(1.5f, 1.5f, 2.2f)); // Scaled up for magnificent visibility!
 	}
 
 	// 3. Wings
